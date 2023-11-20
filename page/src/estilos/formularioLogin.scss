@@ -1,0 +1,63 @@
+@import 'colores.scss';
+
+.formulario-login{
+    background: rgb(8, 36, 80);
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    margin:8vh auto;
+    label{
+        font-size: 1rem;
+        margin: 2rem auto 0.5rem 8%;
+        color: white;
+    }
+    .entrada{
+        font-size: 1rem;
+        padding: 0.5rem 2%;
+        margin: auto;
+        width: 80%;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        background: rgb(236, 236, 247);
+        color: rgb(4, 4, 46);
+        font-weight: bold;
+        &::placeholder{
+            color: rgb(83, 83, 138);
+        }
+    }
+    .boton{
+        margin:2rem auto;
+        font-size: 1.3rem;
+        padding: 0.5rem 2rem;
+        cursor: pointer;
+        background: rgb(203, 203, 235);
+        color: rgb(2, 2, 27);
+        border: 2px solid $fondoColor;
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        &:hover{
+            background: $fondoColor;
+            color:rgb(203, 203, 235) ;
+        }
+    }
+}
+
+@media (max-width:812px) {
+    .formulario-login{
+        width: 70%;
+        .boton{
+            font-size: 1rem;
+            padding: 0.3rem 1rem;
+        }
+    }
+}
+@media (max-width:500px) {
+    .formulario-login{
+        width: 90%;
+        .boton{
+            font-size: 1rem;
+            padding: 0.3rem 1rem;
+        }
+    }
+}

@@ -1,0 +1,70 @@
+.contenedor-home {
+    width: 90%;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+
+    .imagenes-usuario {
+        color: white;
+        width: 100%;
+        margin-bottom: 3rem;
+
+        .usuario-info {
+            display: flex;
+            align-items: center;
+
+            .nombre {
+                align-items: center;
+                height: fit-content;
+                margin-left: 1rem;
+                font-size: 1.5rem;
+            }
+
+            .area_foto {
+                width: 3.5rem;
+                height: 3.5rem;
+                overflow: hidden;
+                display: flex;
+                border-radius: 100%;
+
+                .foto-perfil {
+                    width: 150%;
+                    height: 100%;
+                }
+            }
+        }
+
+        .descripcion {
+            max-width: 88%;
+            margin: 1rem auto;
+            font-size: 1.5rem;
+        }
+
+        .parte_foto {
+            width: 88%;
+            margin: auto;
+
+            .foto {
+                max-width: 100%;
+            }
+
+            h2 {
+                font-size: 2rem;
+                margin: 1rem auto 0 0;
+                width: fit-content;
+            }
+        }
+    }
+}
+
+@media (max-width:746px) {
+    .contenedor-home {
+        .imagenes-usuario {
+            .parte_foto {
+                h2 {
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+}

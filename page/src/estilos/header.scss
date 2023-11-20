@@ -1,0 +1,67 @@
+@import 'colores.scss';
+
+header {
+    width: 100%;
+    background: $fondoColor;
+    display: flex;
+    height: 5rem;
+    align-items: center;
+
+    .titulo {
+        display: flex;
+        align-items: center;
+        margin-left: 2rem;
+
+        .logo {
+            width: 3rem;
+        }
+
+        .titulo-texto {
+            color: $fondeLetra;
+            margin-left: 1rem;
+            cursor:default;
+        }
+    }
+
+    .area_menu {
+        display: flex;
+        margin-right:2% ;
+        margin-left: auto;
+        
+        span {
+            color: $fondeLetra;
+            user-select: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 10px;
+            margin-bottom: 0;
+            margin-top: auto;
+            &.home{
+                font-weight: bold;
+                font-size: 1.3rem;
+            }
+            &:hover {
+                background: $fondoColerHover;
+            }
+        }
+    }
+}
+
+@media (max-width:550px) {
+   header{
+    h1{
+        .titulo-texto{
+            display: none;
+        }
+    }
+    .area_menu{
+        span{
+            font-size: 0.8rem;
+            &.home{
+                font-size: 1rem;
+            }
+        }
+        
+    }
+   }
+}

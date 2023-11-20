@@ -4,12 +4,12 @@ import { UseContexto } from "../Context";
 import { rutas } from "../Rutas";
 import { readOtherUser, readUserImageTokens } from "../apis/usuarioApi";
 import { ImagenesUna } from "../Components/Imagenes";
-
+import '../estilos/user.scss';
 
 const initialUsuario: UsauioImagen = {
   name: '',
   user_name: '',
-  url_perfil:'',
+  url_perfil: '',
   imagenes: []
 }
 
@@ -37,15 +37,14 @@ export function User() {
   if (usuario.name)
     return (
       <>
-        <div className="informacion-usuario">
-          <img src={usuario.url_perfil} alt="" />
-          <span className="nombre">{usuario.name}</span>
-          <div className="area-imagenes">
-            {usuario.imagenes.map(p=>(
-              <ImagenesUna key={p.id_imagen} {...p}/>
-            ))}
-          </div>
+        <img src={usuario.url_perfil} alt="" className="foto-perfil-main"/>
+        <h2 className="nombre-perfil">{usuario.name}</h2>
+        <div className="area-imagenes">
+          {usuario.imagenes.map(p => (
+            <ImagenesUna key={p.id_imagen} {...p} />
+          ))}
         </div>
+
       </>
     );
 

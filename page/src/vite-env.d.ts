@@ -64,5 +64,7 @@ interface Contexto {
     loggear(log:Login):void,
     cerrarSecion():void,
     token:string,
-    nombre:string
+    nombre:string,
+    mostrarAgregarImagen:boolean, 
+    setMostrarAgregarImagen(a:boolean):void
 }

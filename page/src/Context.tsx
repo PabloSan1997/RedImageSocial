@@ -2,7 +2,7 @@
 import React from "react";
 import { readImagene } from "./apis/imagenesApi";
 import { loginRequest, readUsuarioToken } from "./apis/usuarioApi";
-import {useCookies} from 'react-cookie';
+import { useCookies } from 'react-cookie';
 
 const Contexto = React.createContext({});
 
@@ -19,6 +19,7 @@ export function ProvedorContexto({ children }: Children) {
     const [mostrarMensaje, setMostrarMensaje] = React.useState(false);
     const [cookie, setCookie, removeCookie] = useCookies(['miToken']);
     const [nombre, setNombre] = React.useState('');
+    const [mostrarAgregarImagen, setMostrarAgregarImagen] = React.useState(false);
 
     React.useEffect(() => {
         if (permiso) {
@@ -32,22 +33,22 @@ export function ProvedorContexto({ children }: Children) {
                     setPermiso(false);
                 });
         }
-        
+
     }, [permiso]);
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         readUsuarioToken(cookie.miToken)
-        .then(data=>{
-            setPermiso(data.permiso);
-            setNombre(data.name);
-        });
-    },[cookie.miToken]);
+            .then(data => {
+                setPermiso(data.permiso);
+                setNombre(data.name);
+            });
+    }, [cookie.miToken]);
 
     React.useEffect(() => {
         loginRequest(login)
             .then(data => {
                 setPermiso(data.permiso);
-                setCookie('miToken', data.token, {maxAge:10000});
+                setCookie('miToken', data.token, { maxAge: 10000 });
             })
             .catch(error => {
                 if (mostrarMensaje) {
@@ -61,7 +62,7 @@ export function ProvedorContexto({ children }: Children) {
         setActualizarLogin(!acutalizarLogin);
         setMostrarMensaje(true);
     }
-    const cerrarSecion = () =>{
+    const cerrarSecion = () => {
         removeCookie('miToken');
         setPermiso(false);
         setLogin(initialStateLogin);
@@ -73,8 +74,10 @@ export function ProvedorContexto({ children }: Children) {
             imagenes,
             loggear,
             cerrarSecion,
-            token:cookie.miToken,
+            token: cookie.miToken,
             nombre,
+            mostrarAgregarImagen,
+            setMostrarAgregarImagen
         }}>
             {children}
         </Contexto.Provider>

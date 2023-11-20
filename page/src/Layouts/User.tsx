@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { Navigate, useParams } from 'react-router-dom';
 import { UseContexto } from "../Context";
@@ -37,7 +38,9 @@ export function User() {
   if (usuario.name)
     return (
       <>
-        <img src={usuario.url_perfil} alt="" className="foto-perfil-main"/>
+        <div className="efecto-imagen">
+          <img src={usuario.url_perfil} alt="" className="foto-perfil-main" />
+        </div>
         <h2 className="nombre-perfil">{usuario.name}</h2>
         <div className="area-imagenes">
           {usuario.imagenes.map(p => (

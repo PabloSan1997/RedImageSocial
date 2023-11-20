@@ -5,6 +5,7 @@ import { Home } from './Layouts/Home';
 import { User } from './Layouts/User';
 import { Imagen } from './Layouts/Imagen';
 import { Header } from './Components/Header';
+import { BotonAgregar } from './Components/BotonAgregar';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const rutas = {
@@ -47,6 +48,7 @@ export function RutasProvedor() {
         <HashRouter>
             <Header />
             <Rutas />
+            <BotonAgregar/>
         </HashRouter>
     );
 }

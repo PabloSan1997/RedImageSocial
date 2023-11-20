@@ -18,6 +18,11 @@
                 height: fit-content;
                 margin-left: 1rem;
                 font-size: 1.5rem;
+                cursor: pointer;
+                user-select: none;
+                &:hover{
+                    text-decoration: underline;
+                }
             }
 
             .area_foto {
@@ -28,8 +33,9 @@
                 border-radius: 100%;
 
                 .foto-perfil {
-                    width: 150%;
+                    width: 100%;
                     height: 100%;
+                    cursor: pointer;
                 }
             }
         }

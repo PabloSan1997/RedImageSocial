@@ -1,0 +1,27 @@
+@import 'colores.scss';
+
+.boton-agregar {
+    width: 5rem;
+    height: 5rem;
+    background: rgba(10, 243, 49, 0.281);
+    color: rgba(255, 255, 255, 0.411);
+    display: flex;
+    font-size: 3rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 4.5rem;
+    border-radius: 100%;
+    position: fixed;
+    z-index: 1;
+    top: auto;
+    bottom: 5rem;
+    right: 5rem;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.5s ease;
+    &:hover {
+        background: rgba(10, 243, 49, 0.877);
+        color: rgba(255, 255, 255, 0.945);
+        transform: rotate(90deg);
+    }
+}

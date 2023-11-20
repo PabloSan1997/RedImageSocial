@@ -6,6 +6,7 @@ import { useCookies } from 'react-cookie';
 
 const Contexto = React.createContext({});
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const initialStateLogin: Login = {
     user_name: '',
     password: ''

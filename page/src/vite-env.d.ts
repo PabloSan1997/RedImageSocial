@@ -68,5 +68,6 @@ interface Contexto {
     mostrarAgregarImagen:boolean, 
     setMostrarAgregarImagen(a:boolean):void,
     agregarImagen(a:AgregarImagen):Promise<void>,
-    borrarLaImagen(id_imagen:string):Promise<void>
+    borrarLaImagen(id_imagen:string):Promise<void>,
+    loading:boolean
 }

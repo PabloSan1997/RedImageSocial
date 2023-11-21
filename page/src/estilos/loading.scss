@@ -1,0 +1,16 @@
+.loading{
+    width: 10rem;
+    height: 10rem;
+    border: 5px solid rgb(31, 40, 78);
+    border-top-color:rgb(168, 168, 243) ;
+    margin:5rem auto;
+    animation: cargando 1s linear infinite;
+    border-radius: 100%;
+}
+@keyframes cargando {
+    0%{
+        transform: rotate(0deg);
+    }100%{
+        transform: rotate(360deg);
+    }
+}

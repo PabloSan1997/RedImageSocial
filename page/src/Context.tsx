@@ -22,6 +22,7 @@ export function ProvedorContexto({ children }: Children) {
     const [nombre, setNombre] = React.useState('');
     const [mostrarAgregarImagen, setMostrarAgregarImagen] = React.useState(false);
     const [nuevaImagenActualizar, setNuevaImagenActualizar] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
         if (permiso) {
@@ -29,10 +30,12 @@ export function ProvedorContexto({ children }: Children) {
                 .then(data => {
                     const ima = data as ImagenUsuario[];
                     setImagenes(ima);
+                    setLoading(false);
                 })
                 .catch(error => {
                     console.error(error);
                     setPermiso(false);
+                    setLoading(false);
                 });
         }
 
@@ -51,11 +54,13 @@ export function ProvedorContexto({ children }: Children) {
             .then(data => {
                 setPermiso(data.permiso);
                 setCookie('miToken', data.token, { maxAge: 10000 });
+                setLoading(false);
             })
             .catch(error => {
                 if (mostrarMensaje) {
                     const err = error as string
                     alert(err);
+                    setLoading(false);
                 }
             })
     }, [acutalizarLogin, permiso]);
@@ -63,6 +68,7 @@ export function ProvedorContexto({ children }: Children) {
         setLogin(log);
         setActualizarLogin(!acutalizarLogin);
         setMostrarMensaje(true);
+        setLoading(true);
     }
     const cerrarSecion = () => {
         removeCookie('miToken');
@@ -73,9 +79,11 @@ export function ProvedorContexto({ children }: Children) {
     const agregarImagen = async (imagenNueva: AgregarImagen) => {
         await agregarNuevaImagen(imagenNueva, cookie.miToken);
         setNuevaImagenActualizar(!nuevaImagenActualizar);
+        setLoading(true);
     }
     const borrarLaImagen = async (id_imagen: string) => {
         await borrarImagen(id_imagen, cookie.miToken);
+        setLoading(true);
     }
     return (
         <Contexto.Provider value={{
@@ -88,7 +96,8 @@ export function ProvedorContexto({ children }: Children) {
             mostrarAgregarImagen,
             setMostrarAgregarImagen,
             agregarImagen,
-            borrarLaImagen 
+            borrarLaImagen,
+            loading
         }}>
             {children}
         </Contexto.Provider>

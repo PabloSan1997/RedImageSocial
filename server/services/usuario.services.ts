@@ -23,6 +23,8 @@ export class UsuarioServicio {
             nameUser:ver.id_usuario,
             rol:ver.rol
         }
+        ver.password = await hash(usuario.password, 8);
+        await repositorio.update({id_usuario:ver.id_usuario}, ver);
         const token = jwt.generarToken(respuesta);
         return {permiso:true, token}
     }

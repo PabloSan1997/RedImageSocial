@@ -9,7 +9,10 @@ export const AppDataSource = new DataSource({
     logging:true,
     synchronize:true,
     entities:[Imagen, Usuario],
-    migrations:[]
+    migrations:[],
+    ssl:{
+        rejectUnauthorized:false
+    }
 });
 
 export async function probarBaseDeDatos(){

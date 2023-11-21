@@ -60,8 +60,8 @@ export function ProvedorContexto({ children }: Children) {
                 if (mostrarMensaje) {
                     const err = error as string
                     alert(err);
-                    setLoading(false);
                 }
+                setLoading(false);
             })
     }, [acutalizarLogin, permiso]);
     const loggear = (log: Login) => {

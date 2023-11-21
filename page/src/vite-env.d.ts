@@ -66,5 +66,7 @@ interface Contexto {
     token:string,
     nombre:string,
     mostrarAgregarImagen:boolean, 
-    setMostrarAgregarImagen(a:boolean):void
+    setMostrarAgregarImagen(a:boolean):void,
+    agregarImagen(a:AgregarImagen):Promise<void>,
+    borrarLaImagen(id_imagen:string):Promise<void>
 }

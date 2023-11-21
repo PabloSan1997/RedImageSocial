@@ -18,6 +18,8 @@ export function User() {
   const data = useParams();
   const { permiso, token } = UseContexto();
   const [usuario, setUsuario] = React.useState<UsauioImagen>(initialUsuario);
+  const [modoAdmin, setModoAdmin] = React.useState(false);
+  const [act, setAct] = React.useState(false);
 
   localStorage.ir = `${rutas.mainuser}/${data.id_usuario ? data.id_usuario : ''}`;
 
@@ -26,12 +28,16 @@ export function User() {
       readUserImageTokens(token)
         .then(data => {
           setUsuario(data);
+          setModoAdmin(true);
         });
     } else {
       readOtherUser(data.id_usuario)
-        .then(data => setUsuario(data));
+        .then(data =>{ 
+          setUsuario(data);
+          setModoAdmin(false);
+        });
     }
-  }, [data.id_usuario]);
+  }, [data.id_usuario, act]);
 
   if (!permiso) return <Navigate to={rutas.login} />
 
@@ -44,7 +50,7 @@ export function User() {
         <h2 className="nombre-perfil">{usuario.name}</h2>
         <div className="area-imagenes">
           {usuario.imagenes.map(p => (
-            <ImagenesUna key={p.id_imagen} {...p} />
+            <ImagenesUna key={p.id_imagen} {...p} modoAdmin={modoAdmin} act={act} setAct={setAct}/>
           ))}
         </div>
 

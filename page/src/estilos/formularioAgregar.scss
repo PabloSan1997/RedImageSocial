@@ -1,0 +1,57 @@
+@import 'colores.scss';
+.formulario-agregar{
+    background: rgb(4, 4, 51);
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 2;
+    top:0;
+    bottom: 0;
+    margin:3rem auto;
+    left: 0;
+    right: 0;
+    height: fit-content;
+    padding: 1.5rem 2rem;
+    h2{
+        margin:0 auto 0.5rem auto;
+        font-size: 2rem;
+        color: $fondeLetra;
+    }
+    label{
+        font-size: 1.3rem;
+        color: $fondeLetra;
+        margin-bottom: 0.2rem;
+    }
+    .entrada{
+        padding: 0.2rem;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        border: none;
+        outline: none;
+        margin-bottom: 1rem;
+        background: rgb(233, 233, 247);
+        &::placeholder{
+            color: rgb(95, 95, 141);
+        }
+    }
+    .area-botones{
+        display: flex;
+        margin:1rem auto;
+        .boton{
+            margin: 0 1rem;
+            padding: .3rem .8rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            background: rgb(189, 189, 233);
+            border-radius: 10px;
+            border: 2px outset rgb(6, 20, 80);
+            color: rgb(4, 4, 65);
+            transition: all 0.3s ease;
+            &:hover{
+                background: rgb(6, 20, 80);
+                color: rgb(189, 189, 233);
+            }
+        }
+    }
+}

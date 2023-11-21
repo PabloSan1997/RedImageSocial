@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { readImagene } from "./apis/imagenesApi";
+import { agregarNuevaImagen, borrarImagen, readImagene } from "./apis/imagenesApi";
 import { loginRequest, readUsuarioToken } from "./apis/usuarioApi";
 import { useCookies } from 'react-cookie';
 
@@ -21,6 +21,7 @@ export function ProvedorContexto({ children }: Children) {
     const [cookie, setCookie, removeCookie] = useCookies(['miToken']);
     const [nombre, setNombre] = React.useState('');
     const [mostrarAgregarImagen, setMostrarAgregarImagen] = React.useState(false);
+    const [nuevaImagenActualizar, setNuevaImagenActualizar] = React.useState(false);
 
     React.useEffect(() => {
         if (permiso) {
@@ -35,7 +36,7 @@ export function ProvedorContexto({ children }: Children) {
                 });
         }
 
-    }, [permiso]);
+    }, [permiso, nuevaImagenActualizar]);
 
     React.useEffect(() => {
         readUsuarioToken(cookie.miToken)
@@ -69,6 +70,13 @@ export function ProvedorContexto({ children }: Children) {
         setLogin(initialStateLogin);
         setMostrarMensaje(false);
     }
+    const agregarImagen = async (imagenNueva: AgregarImagen) => {
+        await agregarNuevaImagen(imagenNueva, cookie.miToken);
+        setNuevaImagenActualizar(!nuevaImagenActualizar);
+    }
+    const borrarLaImagen = async (id_imagen: string) => {
+        await borrarImagen(id_imagen, cookie.miToken);
+    }
     return (
         <Contexto.Provider value={{
             permiso,
@@ -78,7 +86,9 @@ export function ProvedorContexto({ children }: Children) {
             token: cookie.miToken,
             nombre,
             mostrarAgregarImagen,
-            setMostrarAgregarImagen
+            setMostrarAgregarImagen,
+            agregarImagen,
+            borrarLaImagen 
         }}>
             {children}
         </Contexto.Provider>

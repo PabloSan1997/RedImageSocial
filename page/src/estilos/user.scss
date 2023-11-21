@@ -36,13 +36,28 @@
     color: $fondeLetra;
     margin: auto;
     width: fit-content;
-    font-size: 1.5rem;
+    font-size:2.5rem;
 }
 .area-imagenes{
     width: 90%;
     margin:3rem auto;
     display: flex;
     flex-direction: column;
+    position: relative;
+    .borrar{
+        color: rgba(255, 255, 255, 0.315);
+        width: 2rem;
+        position: absolute;
+        margin-top: 1%;
+        margin-left: 1%;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.315);
+        padding: 0.2rem;
+        &:hover{
+            background: rgba(0, 0, 0, 0.904);
+            color: rgba(255, 255, 255, 1);
+        }
+    }
     .caja-imagen{
         width: 100%;
         .foto{

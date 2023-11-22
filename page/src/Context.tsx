@@ -84,6 +84,7 @@ export function ProvedorContexto({ children }: Children) {
     const borrarLaImagen = async (id_imagen: string) => {
         await borrarImagen(id_imagen, cookie.miToken);
         setLoading(true);
+        setNuevaImagenActualizar(!nuevaImagenActualizar);
     }
     return (
         <Contexto.Provider value={{

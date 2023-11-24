@@ -16,6 +16,9 @@ export class Imagen{
     @Column({length:5000})
     url_image:string;
 
+    @Column({length:10, default:'jpg'})
+    format_image:string;
+
     @ManyToOne(()=>Usuario, usuario=>usuario.imagenes)
     usuario:Usuario;
 

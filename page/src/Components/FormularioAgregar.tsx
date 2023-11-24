@@ -2,34 +2,43 @@ import React from "react";
 import { UseContexto } from "../Context";
 import '../estilos/formularioAgregar.scss';
 
-const initalTexto:AgregarImagen = {
-    title:'',
-    description:'',
-    url_image:''
+const initalTexto: AgregarImagen = {
+    title: '',
+    description: '',
+    url_image: ''
 }
 
 export function FormularAgregar() {
     const [textos, setTextos] = React.useState(initalTexto);
     const [archivo, setArchivo] = React.useState<File>();
-    const {agregarImagen, setMostrarAgregarImagen} = UseContexto();
+    const [muestra, setMuestra] = React.useState('');
+    const { agregarImagen, setMostrarAgregarImagen } = UseContexto();
     console.log(archivo);
-    const setTitle=(e:React.ChangeEvent<HTMLInputElement>)=>{
-        setTextos({...textos, title:e.target.value});
+    const setTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTextos({ ...textos, title: e.target.value });
     }
-    const setDescripcion=(e:React.ChangeEvent<HTMLInputElement>)=>{
-        setTextos({...textos, description:e.target.value});
+    const setDescripcion = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTextos({ ...textos, description: e.target.value });
     }
-    const agregarArchivo=(e:React.ChangeEvent<HTMLInputElement>)=>{
-        if(e.target.files)
-        setArchivo(e.target.files[0]);
+    const agregarArchivo = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files){
+            setArchivo(e.target.files[0]);
+            const readFile = new FileReader();
+            readFile.readAsDataURL(e.target.files[0]);
+            readFile.addEventListener('load', e=>{
+                if(e.target?.result){
+                    setMuestra(e.target.result as string);
+                }
+            });
+        }
     }
-    const subir=(e:React.FormEvent<HTMLFormElement>)=>{
+    const subir = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         agregarImagen(textos, archivo as File)
-        .then(()=>{
-            setTextos(initalTexto);
-            setMostrarAgregarImagen(false);
-        });
+            .then(() => {
+                setTextos(initalTexto);
+                setMostrarAgregarImagen(false);
+            });
     }
     return (
         <form className="formulario-agregar" onSubmit={subir}>
@@ -60,9 +69,10 @@ export function FormularAgregar() {
                 placeholder="escribir"
                 onChange={agregarArchivo}
             />
+            {muestra && <img src={muestra} alt="imagen de muesra" className="muestra" />}
             <div className="area-botones">
                 <button className="boton" type='submit'>Agregar</button>
-                <button className="boton" type='button' onClick={()=>setMostrarAgregarImagen(false)}>Cerrar</button>
+                <button className="boton" type='button' onClick={() => setMostrarAgregarImagen(false)}>Cerrar</button>
             </div>
         </form>
     );

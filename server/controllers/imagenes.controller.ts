@@ -59,4 +59,8 @@ export class ImagenesController {
             next(Boom.badRequest(err));
         }
     }
+    async agregarPuraImagen(req: Request, res: Response, next: NextFunction){
+        const lata = req.file;
+        res.json({url_image:'https://img-egc.xvideos-cdn.com/videos/thumbs169poster/ae/01/6b/ae016b61be426922c7eccf31ea6dcb45/ae016b61be426922c7eccf31ea6dcb45.25.jpg'});
+    }
 }

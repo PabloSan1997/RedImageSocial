@@ -10,7 +10,7 @@ const initalTexto:AgregarImagen = {
 
 export function FormularAgregar() {
     const [textos, setTextos] = React.useState(initalTexto);
-
+    const [archivo, setArchivo] = React.useState<File>();
     const {agregarImagen, setMostrarAgregarImagen} = UseContexto();
 
     const setTitle=(e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -19,12 +19,13 @@ export function FormularAgregar() {
     const setDescripcion=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setTextos({...textos, description:e.target.value});
     }
-    const setUrlImagen=(e:React.ChangeEvent<HTMLInputElement>)=>{
-        setTextos({...textos, url_image:e.target.value});
+    const agregarArchivo=(e:React.ChangeEvent<HTMLInputElement>)=>{
+        if(e.target.files)
+        setArchivo(e.target.files[0]);
     }
     const subir=(e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
-        agregarImagen(textos)
+        agregarImagen(textos, archivo as File)
         .then(()=>{
             setTextos(initalTexto);
             setMostrarAgregarImagen(false);
@@ -51,14 +52,13 @@ export function FormularAgregar() {
                 value={textos.description}
                 onChange={setDescripcion}
             />
-            <label htmlFor="url_image">Url imagen</label>
+            <label htmlFor="url_image">Agregar imagen</label>
             <input
-                type="text"
-                className="entrada"
-                id="url_image"
+                type="file"
+                className="file"
+                id="file_imagen"
                 placeholder="escribir"
-                value={textos.url_image}
-                onChange={setUrlImagen}
+                onChange={agregarArchivo}
             />
             <div className="area-botones">
                 <button className="boton" type='submit'>Agregar</button>

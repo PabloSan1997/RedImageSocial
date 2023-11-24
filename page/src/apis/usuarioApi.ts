@@ -1,7 +1,7 @@
+import { url } from "./ruta";
 
 
 export async function loginRequest(data:Login):Promise<LoginResponse>{
-    const url = import.meta.env.VITE_API_RUTA;
     const usuario = await (await fetch(`${url}/user/login`, {
         method:'POST',
         headers:{
@@ -16,7 +16,6 @@ export async function loginRequest(data:Login):Promise<LoginResponse>{
     return usuario.results as LoginResponse;
 }
 export async function readUsuarioToken(token:string):Promise<{permiso:boolean, name:string}>{
-    const url = import.meta.env.VITE_API_RUTA;
     const usuario = await (await fetch(`${url}/user/confirmar`, {
         method:'GET',
         headers:{
@@ -31,7 +30,6 @@ export async function readUsuarioToken(token:string):Promise<{permiso:boolean, n
 }
 
 export async function readUserImageTokens(token:string):Promise<UsauioImagen>{
-    const url = import.meta.env.VITE_API_RUTA;
     const usuario = await (await fetch(`${url}/user`, {
         method:'GET',
         headers:{
@@ -46,7 +44,6 @@ export async function readUserImageTokens(token:string):Promise<UsauioImagen>{
 }
 
 export async function readOtherUser(id_usuario:string):Promise<UsauioImagen>{
-    const url = import.meta.env.VITE_API_RUTA;
     const usuario = await (await fetch(`${url}/user/${id_usuario}`, {
         method:'GET',
     })).json() as Respuesta;

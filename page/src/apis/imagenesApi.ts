@@ -1,6 +1,7 @@
+import { url } from "./ruta";
+
 
 export async function readImagene(id: string | null = null) {
-    const url = import.meta.env.VITE_API_RUTA;
     if (!id) {
         const ft = await fetch(`${url}/imagenes`);
         const respuesta = await ft.json() as Respuesta;
@@ -23,7 +24,6 @@ export async function readImagene(id: string | null = null) {
 }
 
 export async function agregarNuevaImagen(nuevaImagen: AgregarImagen, token: string): Promise<void> {
-    const url = import.meta.env.VITE_API_RUTA;
     const respuesta = await (await fetch(`${url}/imagenes`, {
         method: 'POST',
         headers: {
@@ -36,7 +36,6 @@ export async function agregarNuevaImagen(nuevaImagen: AgregarImagen, token: stri
 }
 
 export async function borrarImagen(id_imagen: string, token: string) {
-    const url = import.meta.env.VITE_API_RUTA;
     const respuesta = await fetch(`${url}/imagenes/${id_imagen}`, {
         method: 'DELETE',
         headers: {
@@ -45,4 +44,15 @@ export async function borrarImagen(id_imagen: string, token: string) {
         }
     });
     if (!respuesta.ok) throw `Error al agregar nuevo usuario`;
+}
+
+export async function puraImagen(data:File):Promise<{url_image:string}> {
+    const archivo = new FormData();
+    archivo.append('lafoto', data);
+    const ft = await fetch(`${url}/imagenes/puraImagen`,{
+        method:'POST',
+        body:archivo
+    });
+    const response = await ft.json();
+   return response;
 }

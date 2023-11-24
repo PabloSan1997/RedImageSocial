@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
 });
 
 export const multerUpload = multer({
-    dest: "src/imagenes",
+    dest: "dist/imagenes",
     limits: {
         fieldSize: 10000000
     },

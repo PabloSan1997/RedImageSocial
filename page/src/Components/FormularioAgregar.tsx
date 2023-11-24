@@ -12,7 +12,7 @@ export function FormularAgregar() {
     const [textos, setTextos] = React.useState(initalTexto);
     const [archivo, setArchivo] = React.useState<File>();
     const {agregarImagen, setMostrarAgregarImagen} = UseContexto();
-
+    console.log(archivo);
     const setTitle=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setTextos({...textos, title:e.target.value});
     }

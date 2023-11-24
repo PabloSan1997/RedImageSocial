@@ -1,7 +1,8 @@
 import { AppDataSource } from "../database/config";
 import { Imagen } from "../database/models/Imagen";
 import { Usuario } from "../database/models/Usuario";
-
+import { Express } from "express";
+import { subirArchivo } from "../firebase/config";
 
 
 export class ImagenesService {
@@ -61,10 +62,14 @@ export class ImagenesService {
             await reImagen.remove(imagen);
 
     }
-    async agregarImagenUnica(id_imagen: string, id_usuario: string, url_image: string) {
+    async agregarImagenUnica(id_imagen: string, id_usuario: string, file:Express.Multer.File|undefined) {
         const reImagen = AppDataSource.getRepository(Imagen);
+        if(!file) throw 'No se encontro imagen para subir';
         const encontrar = await reImagen.findOne({ where: { id_imagen }, relations: { usuario: true } });
         if (!encontrar || encontrar.usuario.id_usuario !== id_usuario) throw 'Error al agregar imagen';
-        await reImagen.update({ id_imagen }, { url_image });
+        console.log(file);
+        const url_image = await subirArchivo(file, id_imagen);
+        await reImagen.update({id_imagen}, {url_image});
+        
     }
 }

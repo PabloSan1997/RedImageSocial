@@ -61,4 +61,10 @@ export class ImagenesService {
             await reImagen.remove(imagen);
 
     }
+    async agregarImagenUnica(id_imagen: string, id_usuario: string, url_image: string) {
+        const reImagen = AppDataSource.getRepository(Imagen);
+        const encontrar = await reImagen.findOne({ where: { id_imagen }, relations: { usuario: true } });
+        if (!encontrar || encontrar.usuario.id_usuario !== id_usuario) throw 'Error al agregar imagen';
+        await reImagen.update({ id_imagen }, { url_image });
+    }
 }

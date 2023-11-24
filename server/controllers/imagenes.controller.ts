@@ -3,6 +3,7 @@ import { ImagenesService } from '../services/imagenes.services';
 import { jwt } from '../utilities/jsonwebtoken';
 import { generarRespuesta } from '../utilities/respuesta';
 import Boom from '@hapi/boom';
+import { borrarCacheImagen } from '../utilities/borrarCacheImagen';
 
 
 const servicio = new ImagenesService();
@@ -13,10 +14,10 @@ export class ImagenesController {
             const body = req.body as ImagenCrear;
             const { autorization } = req.headers as { autorization: string };
             const auth = jwt.verificarToken(autorization);
-            const nuevaTarea = await servicio.agregarImagen(auth.nameUser, body);
-            const { name, user_name, } = nuevaTarea.usuario;
+            const nuevaImagen = await servicio.agregarImagen(auth.nameUser, body);
+            const { name, user_name, } = nuevaImagen.usuario;
             const respuesta = {
-                ...nuevaTarea,
+                ...nuevaImagen,
                 usuario: {
                     name,
                     user_name
@@ -39,7 +40,7 @@ export class ImagenesController {
     }
     async leerImagenUno(req: Request, res: Response, next: NextFunction) {
         try {
-            const {id_imagen} = req.params as {id_imagen:string};
+            const { id_imagen } = req.params as { id_imagen: string };
             const datos = await servicio.leerImagenBPK(id_imagen);
             generarRespuesta(res, 200, datos, 'Elemento');
         } catch (error) {
@@ -47,9 +48,9 @@ export class ImagenesController {
             next(Boom.notFound(err));
         }
     }
-    async eliminarImagenes(req: Request, res: Response, next: NextFunction){
+    async eliminarImagenes(req: Request, res: Response, next: NextFunction) {
         try {
-            const {id_imagen} = req.params as {id_imagen:string};
+            const { id_imagen } = req.params as { id_imagen: string };
             const { autorization } = req.headers as { autorization: string };
             const auth = jwt.verificarToken(autorization);
             await servicio.eliminarImagenPk(id_imagen, auth.nameUser)
@@ -59,8 +60,14 @@ export class ImagenesController {
             next(Boom.badRequest(err));
         }
     }
-    async agregarPuraImagen(req: Request, res: Response, next: NextFunction){
-        const lata = req.file;
-        res.json({url_image:'https://img-egc.xvideos-cdn.com/videos/thumbs169poster/ae/01/6b/ae016b61be426922c7eccf31ea6dcb45/ae016b61be426922c7eccf31ea6dcb45.25.jpg'});
+    async agregarPuraImagen(req: Request, res: Response, next: NextFunction) {
+        const lata = req.file as {originalname:string};
+        await borrarCacheImagen(lata?.originalname);
+        console.log(lata);
+        const { id_imagen } = req.params as { id_imagen: string };
+        const { autorization } = req.headers as { autorization: string };
+        const auth = jwt.verificarToken(autorization);
+        await servicio.agregarImagenUnica(id_imagen, auth.nameUser, 'https://img-egc.xvideos-cdn.com/videos/thumbs169poster/ae/01/6b/ae016b61be426922c7eccf31ea6dcb45/ae016b61be426922c7eccf31ea6dcb45.25.jpg');
+        generarRespuesta(res, 201, { message: lata }, 'add element');
     }
 }

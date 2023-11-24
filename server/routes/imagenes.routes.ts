@@ -15,6 +15,6 @@ imagenesRouter.get('/:id_imagen', joiHandle(idImagenJoi, 'params'), controller.l
 
 imagenesRouter.post('/',joiHandle(crearImagenJoi, 'body') ,controller.agregarImagen);
 
-imagenesRouter.post('/puraImagen', multerUpload.single('lafoto'), controller.agregarPuraImagen);
+imagenesRouter.post('/puraImagen/:id_imagen', multerUpload.single('lafoto'), controller.agregarPuraImagen);
 
 imagenesRouter.delete('/:id_imagen', joiHandle(idImagenJoi, 'params') ,controller.eliminarImagenes);

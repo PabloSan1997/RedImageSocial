@@ -77,9 +77,8 @@ export function ProvedorContexto({ children }: Children) {
         setMostrarMensaje(false);
     }
     const agregarImagen = async (imagenNueva: AgregarImagen, data:File) => {
-        const imag = await puraImagen(data);
-        imagenNueva.url_image=imag.url_image;
-        await agregarNuevaImagen(imagenNueva, cookie.miToken);
+        const imag = await agregarNuevaImagen(imagenNueva, cookie.miToken);
+        await puraImagen(data, imag.id_imagen, cookie.miToken);
         setNuevaImagenActualizar(!nuevaImagenActualizar);
         setLoading(true);
     }

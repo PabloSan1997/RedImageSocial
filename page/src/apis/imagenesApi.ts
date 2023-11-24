@@ -23,7 +23,7 @@ export async function readImagene(id: string | null = null) {
     }
 }
 
-export async function agregarNuevaImagen(nuevaImagen: AgregarImagen, token: string): Promise<void> {
+export async function agregarNuevaImagen(nuevaImagen: AgregarImagen, token: string): Promise<Imagen> {
     const respuesta = await (await fetch(`${url}/imagenes`, {
         method: 'POST',
         headers: {
@@ -33,6 +33,7 @@ export async function agregarNuevaImagen(nuevaImagen: AgregarImagen, token: stri
         body: JSON.stringify(nuevaImagen)
     })).json() as Respuesta;
     if (respuesta.statusCode >= 400) throw `Error al agregar nuevo usuario`;
+    return respuesta.results as Imagen;
 }
 
 export async function borrarImagen(id_imagen: string, token: string) {
@@ -46,11 +47,14 @@ export async function borrarImagen(id_imagen: string, token: string) {
     if (!respuesta.ok) throw `Error al agregar nuevo usuario`;
 }
 
-export async function puraImagen(data:File):Promise<{url_image:string}> {
+export async function puraImagen(data:File, id_imagen:string, token:string):Promise<{url_image:string}> {
     const archivo = new FormData();
     archivo.append('lafoto', data);
-    const ft = await fetch(`${url}/imagenes/puraImagen`,{
+    const ft = await fetch(`${url}/imagenes/puraImagen/${id_imagen}`,{
         method:'POST',
+        headers:{
+            autorization: token
+        },
         body:archivo
     });
     const response = await ft.json();

@@ -61,11 +61,15 @@ export class ImagenesController {
         }
     }
     async agregarPuraImagen(req: Request, res: Response, next: NextFunction) {
-        const lata = req.file;
-        const { id_imagen } = req.params as { id_imagen: string };
-        const { autorization } = req.headers as { autorization: string };
-        const auth = jwt.verificarToken(autorization);
-        await servicio.agregarImagenUnica(id_imagen, auth.nameUser, lata);
-        generarRespuesta(res, 201, { message: lata }, 'add element');
+        try {
+            const lata = req.file;
+            const { id_imagen } = req.params as { id_imagen: string };
+            const { autorization } = req.headers as { autorization: string };
+            const auth = jwt.verificarToken(autorization);
+            await servicio.agregarImagenUnica(id_imagen, auth.nameUser, lata);
+            generarRespuesta(res, 201, { message: lata }, 'add element');
+        } catch (error) {
+            next(Boom.badRequest('Problema al agregar datos'));
+        }
     }
 }

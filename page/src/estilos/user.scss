@@ -61,13 +61,17 @@
     }
     .caja-imagen{
         width: 100%;
+        .fecha{
+            color: white;
+            margin-top: 0.5rem;
+        }
         .foto{
             max-width: 100%;
         }
         .titulo{
             color: $fondeLetra;
             font-size: 2rem;
-            margin-top: 1rem;
+            margin-top: 0.4rem;
             margin-bottom: 1rem;
         }
         .descripcion{

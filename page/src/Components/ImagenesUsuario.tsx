@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { rutas } from "../Rutas";
+import { generarTiempo } from '../utilities/tiempo';
 
 export function ImagenesUsuario(props: ImagenUsuario) {
-    const { title, usuario, description, url_image } = props;
+    const { title, usuario, description, url_image, creadedAt } = props;
     const { name, url_perfil, id_usuario } = usuario;
     const navegar = useNavigate();
     return (
@@ -23,6 +24,7 @@ export function ImagenesUsuario(props: ImagenUsuario) {
             <p className="descripcion">{description}</p>
             <div className="parte_foto">
                 <img src={url_image} alt={title} className="foto" />
+                <div className="fecha">{generarTiempo(creadedAt)}</div>
                 <h2 className="nombre-imagen">{title}</h2>
             </div>
         </div>

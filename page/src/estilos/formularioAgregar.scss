@@ -8,7 +8,7 @@
     z-index: 2;
     top:0;
     bottom: 0;
-    margin:3rem auto;
+    margin:1rem auto;
     left: 0;
     right: 0;
     height: fit-content;
@@ -84,6 +84,15 @@
         .entrada{
             width: 90%;
         }
+        h2{
+            font-size: 1.5rem;
+        }
+        label{
+            font-size: 1rem;
+        }
+        .entrada{
+            font-size: 1rem;
+        }
     }
 }
 @media (max-width:382px){
@@ -91,6 +100,33 @@
         .file{
             display: flex;
             font-size: 0.5rem;
+            &::file-selector-button{
+                font-size: 0.8rem;
+            }
+        }
+        h2{
+            font-size: 1rem;
+        }
+    }
+}
+@media (max-width:822px){
+    .formulario-agregar{
+        .muestra{
+            max-width: 20%;
+        }
+    }
+}
+@media (max-width:504px){
+    .formulario-agregar{
+        .file{
+            display: flex;
+            font-size: 0.5rem;
+            &::file-selector-button{
+                font-size: 0.6rem;
+            }
+        }
+        .muestra{
+            max-width: 30%;
         }
     }
 }

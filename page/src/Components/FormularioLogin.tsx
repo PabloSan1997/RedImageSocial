@@ -6,6 +6,7 @@ import '../estilos/formularioLogin.scss'
 export function FormularioLogin() {
     const { loggear } = UseContexto();
     const [textos, setTextos] = React.useState<Login>(initialStateLogin);
+    const [errores, setErrores] = React.useState({user:false, pass:false});
     const setUser = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTextos({ ...textos, user_name: e.target.value });
     }
@@ -14,12 +15,19 @@ export function FormularioLogin() {
     }
     const subir = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        loggear(textos);
+        if(!!textos.user_name && !!textos.password) loggear(textos);
+        else{
+            setErrores({
+                user:!textos.user_name,
+                pass:!textos.password
+            });
+        }
     }
 
     return (
         <form className="formulario-login" onSubmit={subir}>
             <label htmlFor="entrada-username">User name</label>
+           {errores.user?<p className="error">Inserte un usuario</p>:null}
             <input
                 type="text"
                 className="entrada"
@@ -29,6 +37,7 @@ export function FormularioLogin() {
                 placeholder="Escribir"
             />
             <label htmlFor="entrada-password">Password</label>
+            {errores.pass?<p className="error">Inserte una contraseña</p>:null}
             <input
                 type="password"
                 className="entrada"

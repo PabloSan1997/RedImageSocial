@@ -1,7 +1,6 @@
 import { AppDataSource } from "../database/config";
 import { Imagen } from "../database/models/Imagen";
 import { Usuario } from "../database/models/Usuario";
-import { Express } from "express";
 import { eliminarArchivo, subirArchivo } from "../firebase/config";
 
 

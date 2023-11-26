@@ -2,7 +2,7 @@ import { AppDataSource } from "../database/config";
 import { Imagen } from "../database/models/Imagen";
 import { Usuario } from "../database/models/Usuario";
 import { Express } from "express";
-import {  eliminarArchivo, subirArchivo } from "../firebase/config";
+import { eliminarArchivo, subirArchivo } from "../firebase/config";
 
 
 export class ImagenesService {
@@ -44,7 +44,7 @@ export class ImagenesService {
         }
         return mostrar;
     }
-    async eliminarImagenPk(id_imagen: string, id_usuario: string) {
+    async eliminarImagenPk(id_imagen: string, id_usuario: string, quitarArchivo: boolean = true) {
         const reUsuario = AppDataSource.getRepository(Usuario);
         const reImagen = AppDataSource.getRepository(Imagen);
         if (!id_imagen || !id_usuario) throw new Error('No se encontro elemento');
@@ -57,20 +57,28 @@ export class ImagenesService {
             }
         });
         if (!usuario) throw new Error('No se encontro imagen');
+
         const imagen = usuario.imagenes.find(p => p.id_imagen === id_imagen);
-        if (imagen){
-            await eliminarArchivo(`${imagen.id_imagen}.${imagen.format_image}`);
+
+        if (imagen) {
+            const id = imagen.id_imagen;
+            const format = imagen.format_image;
             await reImagen.remove(imagen);
+            if (quitarArchivo) await eliminarArchivo(`${id}.${format}`);
         }
 
     }
-    async agregarImagenUnica(id_imagen: string, id_usuario: string, file:Express.Multer.File|undefined) {
-        const reImagen = AppDataSource.getRepository(Imagen);
-        if(!file) throw 'No se encontro imagen para subir';
-        const formato = file.mimetype.split('image/')[1];
-        const encontrar = await reImagen.findOne({ where: { id_imagen }, relations: { usuario: true } });
-        if (!encontrar || encontrar.usuario.id_usuario !== id_usuario) throw 'Error al agregar imagen';
-        const url_image = await subirArchivo(file, id_imagen, formato);
-        await reImagen.update({id_imagen}, {url_image, format_image:formato});
+    async agregarImagenUnica(id_imagen: string, id_usuario: string, file: Express.Multer.File | undefined) {
+        try {
+            const reImagen = AppDataSource.getRepository(Imagen);
+            if (!file) throw 'No se encontro imagen para subir';
+            const formato = file.mimetype.split('image/')[1];
+            const encontrar = await reImagen.findOne({ where: { id_imagen }, relations: { usuario: true } });
+            if (!encontrar || encontrar.usuario.id_usuario !== id_usuario) throw 'Error al agregar imagen';
+            const url_image = await subirArchivo(file, id_imagen, formato);
+            await reImagen.update({ id_imagen }, { url_image, format_image: formato });
+        } catch (error) {
+            this.eliminarImagenPk(id_imagen, id_usuario, false);
+        }
     }
 }

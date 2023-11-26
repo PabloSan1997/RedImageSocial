@@ -19,7 +19,7 @@ export class ImagenesService {
     async leerImagenes(relation = false) {
         const reImagen = AppDataSource.getRepository(Imagen);
         if (!relation) return await reImagen.find({ order: { creadedAt: 'ASC' } });
-        const imagenes = await reImagen.find({ relations: { usuario: relation }, order: { creadedAt: 'ASC' } });
+        const imagenes = await reImagen.find({ relations: { usuario: relation }, order: { creadedAt: 'DESC' } });
         const mostrar = imagenes.map(p => {
             const { name, user_name, id_usuario, url_perfil } = p.usuario;
             return { ...p, usuario: { id_usuario, name, user_name, url_perfil } }

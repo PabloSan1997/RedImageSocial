@@ -12,9 +12,11 @@ export class ImagenesController {
     async agregarImagen(req: Request, res: Response, next: NextFunction) {
         try {
             const body = req.body as ImagenCrear;
+            const lata = req.file;
             const { autorization } = req.headers as { autorization: string };
             const auth = jwt.verificarToken(autorization);
             const nuevaImagen = await servicio.agregarImagen(auth.nameUser, body);
+            await servicio.agregarImagenUnica(nuevaImagen.id_imagen, auth.nameUser, lata);
             const { name, user_name, } = nuevaImagen.usuario;
             const respuesta = {
                 ...nuevaImagen,
@@ -58,18 +60,6 @@ export class ImagenesController {
         } catch (error) {
             const err = error as Error;
             next(Boom.badRequest(err));
-        }
-    }
-    async agregarPuraImagen(req: Request, res: Response, next: NextFunction) {
-        try {
-            const lata = req.file;
-            const { id_imagen } = req.params as { id_imagen: string };
-            const { autorization } = req.headers as { autorization: string };
-            const auth = jwt.verificarToken(autorization);
-            await servicio.agregarImagenUnica(id_imagen, auth.nameUser, lata);
-            generarRespuesta(res, 201, { message: lata }, 'add element');
-        } catch (error) {
-            next(Boom.badRequest('Problema al agregar datos'));
         }
     }
 }

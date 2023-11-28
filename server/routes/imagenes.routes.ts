@@ -13,8 +13,6 @@ imagenesRouter.get('/', controller.leerImagenes);
 
 imagenesRouter.get('/:id_imagen', joiHandle(idImagenJoi, 'params'), controller.leerImagenUno);
 
-imagenesRouter.post('/',joiHandle(crearImagenJoi, 'body') ,controller.agregarImagen);
+imagenesRouter.post('/', multerUpload.single('lafoto'), controller.agregarImagen);
 
-imagenesRouter.post('/puraImagen/:id_imagen', multerUpload.single('lafoto'), controller.agregarPuraImagen);
-
-imagenesRouter.delete('/:id_imagen', joiHandle(idImagenJoi, 'params') ,controller.eliminarImagenes);
+imagenesRouter.delete('/:id_imagen', joiHandle(idImagenJoi, 'params'), controller.eliminarImagenes);

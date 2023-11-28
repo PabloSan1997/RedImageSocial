@@ -68,6 +68,7 @@ export function FormularAgregar() {
                 id="file_imagen"
                 placeholder="escribir"
                 onChange={agregarArchivo}
+                accept="image/*"
             />
             {muestra && <img src={muestra} alt="imagen de muesra" className="muestra" />}
             <div className="area-botones">

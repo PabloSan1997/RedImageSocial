@@ -18,6 +18,7 @@ interface AgregarImagen {
     description: string,
     url_image: string
 }
+type PROPS = 'title'|'description'|'url_image';
 interface Login {
     user_name: string,
     password: string

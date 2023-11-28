@@ -1,3 +1,4 @@
+import { generarFormdata } from "../utilities/generarFormdata";
 import { url } from "./ruta";
 
 
@@ -23,14 +24,16 @@ export async function readImagene(id: string | null = null) {
     }
 }
 
-export async function agregarNuevaImagen(nuevaImagen: AgregarImagen, token: string): Promise<Imagen> {
+export async function agregarNuevaImagen(nuevaImagen: AgregarImagen, file:File,token: string): Promise<Imagen> {
+    
+    const formulario = generarFormdata(nuevaImagen);
+    formulario.append('lafoto', file);
     const respuesta = await (await fetch(`${url}/imagenes`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
             autorization: token
         },
-        body: JSON.stringify(nuevaImagen)
+        body: formulario
     })).json() as Respuesta;
     if (respuesta.statusCode >= 400) throw `Error al agregar nuevo usuario`;
     return respuesta.results as Imagen;
@@ -47,16 +50,3 @@ export async function borrarImagen(id_imagen: string, token: string) {
     if (!respuesta.ok) throw `Error al agregar nuevo usuario`;
 }
 
-export async function puraImagen(data:File, id_imagen:string, token:string):Promise<{url_image:string}> {
-    const archivo = new FormData();
-    archivo.append('lafoto', data);
-    const ft = await fetch(`${url}/imagenes/puraImagen/${id_imagen}`,{
-        method:'POST',
-        headers:{
-            autorization: token
-        },
-        body:archivo
-    });
-    const response = await ft.json();
-   return response;
-}

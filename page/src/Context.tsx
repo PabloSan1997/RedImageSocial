@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { agregarNuevaImagen, borrarImagen, puraImagen, readImagene } from "./apis/imagenesApi";
+import { agregarNuevaImagen, borrarImagen, readImagene } from "./apis/imagenesApi";
 import { loginRequest, readUsuarioToken } from "./apis/usuarioApi";
 import { useCookies } from 'react-cookie';
 
@@ -76,11 +76,10 @@ export function ProvedorContexto({ children }: Children) {
         setLogin(initialStateLogin);
         setMostrarMensaje(false);
     }
-    const agregarImagen = async (imagenNueva: AgregarImagen, data:File) => {
-        const imag = await agregarNuevaImagen(imagenNueva, cookie.miToken);
-        await puraImagen(data, imag.id_imagen, cookie.miToken);
-        setNuevaImagenActualizar(!nuevaImagenActualizar);
+    const agregarImagen = async (imagenNueva: AgregarImagen, data: File) => {
+        await agregarNuevaImagen(imagenNueva, data, cookie.miToken);
         setLoading(true);
+        setNuevaImagenActualizar(!nuevaImagenActualizar);
     }
     const borrarLaImagen = async (id_imagen: string) => {
         await borrarImagen(id_imagen, cookie.miToken);

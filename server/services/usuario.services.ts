@@ -30,10 +30,11 @@ export class UsuarioServicio {
     }
     async leerUsuarioBPK(id_usuario:string, relacion=true){
         const repositorio = AppDataSource.getRepository(Usuario);
-        const usuario = await repositorio.findOne({where:{id_usuario}, relations:{imagenes:relacion}});
+        const usuario = await repositorio.findOne({where:{id_usuario}, relations:{imagenes:true}});
         if(!usuario || !id_usuario) throw new Error('No se encontro usuario');
         const {name, user_name, imagenes, url_perfil} = usuario;
-        return {name, user_name,  url_perfil, imagenes}
+        const mostrar = imagenes.length!=0?imagenes.reverse():imagenes;
+        return {name, user_name,  url_perfil, imagenes:mostrar}
     }
     async checarUsuario(id_usuario:string){
         const repositorio = AppDataSource.getRepository(Usuario);

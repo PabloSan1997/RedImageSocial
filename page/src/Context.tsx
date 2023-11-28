@@ -77,13 +77,13 @@ export function ProvedorContexto({ children }: Children) {
         setMostrarMensaje(false);
     }
     const agregarImagen = async (imagenNueva: AgregarImagen, data: File) => {
-        await agregarNuevaImagen(imagenNueva, data, cookie.miToken);
         setLoading(true);
+        await agregarNuevaImagen(imagenNueva, data, cookie.miToken);
         setNuevaImagenActualizar(!nuevaImagenActualizar);
     }
     const borrarLaImagen = async (id_imagen: string) => {
-        await borrarImagen(id_imagen, cookie.miToken);
         setLoading(true);
+        await borrarImagen(id_imagen, cookie.miToken);
         setNuevaImagenActualizar(!nuevaImagenActualizar);
     }
     return (

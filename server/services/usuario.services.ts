@@ -32,17 +32,11 @@ export class UsuarioServicio {
         const repositorio = AppDataSource.getRepository(Usuario);
         const reImagen = AppDataSource.getRepository(Imagen);
         const usuario = await repositorio.findOne({ where: { id_usuario } });
-        console.log(usuario);
         if (!usuario || !id_usuario) throw new Error('No se encontro usuario');
         const { name, user_name, url_perfil } = usuario;
-        const imagenesUsuario = await reImagen.find({
+        const imagenes = await reImagen.find({
             where: { usuario },
-            relations: { usuario: true },
             order: { creadedAt: 'DESC' }
-        });
-        const imagenes:ImagenesId[] = imagenesUsuario.map(p=>{
-            const {id_imagen, creadedAt, updatedAt, url_image, description, title}:ImagenesId = p;
-            return {id_imagen, creadedAt, updatedAt, url_image, description, title};
         });
         return { name, user_name, url_perfil, imagenes }
     }
